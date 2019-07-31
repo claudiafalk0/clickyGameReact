@@ -1,30 +1,63 @@
 import React, { Component } from "react";
-import imagesCard from "./components/imagesCard";
-import Wrapper from "./components/Wrapper";
-import images from './images.json.js';
+import ImagesCard from "./imagesCard";
+import Wrapper from "./Wrapper";
+import images from './images.json';
 import "./App.css";
+// import { runInThisContext } from "vm";
+import update from 'immutability-helper';
+const shuffle = require('shuffle-array');
+shuffle(images);
+const InitialArr = { images };
 
-class App extends Component{
-  state = {
-    images
+class App extends Component {
+  // state = {
+  //   images
+  // };
+  constructor(props) {
+    super(props);
+    this.state = InitialArr
   }
 
+  restart = () => {
+    alert(`I'm sorry but you've already chosen that image`);
+    this.setState({ InitialArr }
+    )
+  };
 
-  render(){
-      return(
-    <Wrapper>
+  changeClick = (id) => {
 
-      <h1 className='title'>Click on a picture to play!</h1>
-      {this.state.images.map(image => (
-        <imagesCard
-          image={image.image}
-          click = 
-          key = {image.id}
+      let flag = false, clicker = this.state.images.map(
+          function (item) {
+              if (item.id === id && !item.click) {
+                  item.click = true;
+              } else if (item.id === id && item.click) {
+                  flag = true;
+              }
+          });
+      if (flag) {
+          this.restart()
+      } else {
+          this.setState({clicker});
+      }
 
+
+  };
+
+  render() {
+    return (
+      <Wrapper>
+        <h1>Click an image to begin</h1>
+        {this.state.images.map(item => (
+          <ImagesCard
+            id={item.id}
+            key={item.id}
+            image={item.image}
+            changeClick={this.changeClick}
+            click={item.click}
           />
-      ))}
-    </Wrapper>
-      )
+        ))}
+      </Wrapper>
+    );
   }
 }
 
