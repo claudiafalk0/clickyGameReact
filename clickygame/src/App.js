@@ -7,6 +7,7 @@ import "./App.css";
 import update from 'immutability-helper';
 const shuffle = require('shuffle-array');
 shuffle(images);
+
 const InitialArr = { images };
 
 class App extends Component {
@@ -20,8 +21,10 @@ class App extends Component {
 
   restart = () => {
     alert(`I'm sorry but you've already chosen that image`);
-    this.setState({ InitialArr }
-    )
+    const temp = this.state.images.map(item => item.click = false);
+
+    this.setState({temp});
+
   };
 
   changeClick = (id) => {
@@ -30,7 +33,7 @@ class App extends Component {
           function (item) {
               if (item.id === id && !item.click) {
                   item.click = true;
-              } else if (item.id === id && item.click) {
+              } else if (item.id === id && item.click === true) {
                   flag = true;
               }
           });
@@ -39,7 +42,7 @@ class App extends Component {
       } else {
           this.setState({clicker});
       }
-
+      shuffle(images);
 
   };
 
