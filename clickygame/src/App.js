@@ -36,6 +36,7 @@ class App extends Component {
               } else if (item.id === id && item.click === true) {
                   flag = true;
               }
+              return true;
           });
       if (flag) {
           this.restart()
@@ -49,7 +50,7 @@ class App extends Component {
   render() {
     return (
       <Wrapper>
-        <h1>Click an image to begin</h1>
+        <h1 className='title'>Click an image to begin</h1>
         {this.state.images.map(item => (
           <ImagesCard
             id={item.id}
